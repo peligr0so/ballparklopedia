@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { Stadium } from "@/lib/stadiums";
+import type { MapStadium } from "./StadiumMap";
 
 const StadiumMap = dynamic(() => import("./StadiumMap"), {
   ssr: false,
@@ -12,8 +12,6 @@ const StadiumMap = dynamic(() => import("./StadiumMap"), {
     />
   ),
 });
-
-type MapStadium = Pick<Stadium, "slug" | "name" | "team" | "coordinates" | "division">;
 
 export default function MapLoader({
   stadiums,

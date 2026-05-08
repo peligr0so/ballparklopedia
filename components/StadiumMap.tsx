@@ -3,7 +3,6 @@
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useRef } from "react";
-import type { Stadium } from "@/lib/stadiums";
 
 const DIVISION_COLORS: Record<string, string> = {
   "AL East": "#1d4ed8",
@@ -14,7 +13,14 @@ const DIVISION_COLORS: Record<string, string> = {
   "NL West": "#0891b2",
 };
 
-type MapStadium = Pick<Stadium, "slug" | "name" | "team" | "coordinates" | "division">;
+export type MapStadium = {
+  slug: string;
+  name: string;
+  team: string;
+  coordinates: { lat: number; lng: number };
+  division: string;
+  status?: "active" | "former";
+};
 
 interface Props {
   stadiums: MapStadium[];
@@ -40,19 +46,26 @@ export default function StadiumMap({ stadiums, height = "480px" }: Props) {
     map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), "top-right");
 
     stadiums.forEach((stadium) => {
-      const color = DIVISION_COLORS[stadium.division] ?? "#3b82f6";
+      const isFormer = stadium.status === "former";
+      const color = isFormer ? "#9ca3af" : (DIVISION_COLORS[stadium.division] ?? "#3b82f6");
+      const size = isFormer ? "20px" : "26px";
+      const border = isFormer ? "1.5px solid #d1d5db" : "2.5px solid white";
+      const shadow = isFormer ? "0 1px 3px rgba(0,0,0,0.15)" : "0 2px 6px rgba(0,0,0,0.25)";
+      const opacity = isFormer ? "0.75" : "1";
 
       const el = document.createElement("div");
       el.style.cssText =
-        `width:26px;height:26px;background:${color};border:2.5px solid white;` +
-        `border-radius:50%;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.25);` +
-        `display:flex;align-items:center;justify-content:center;font-size:11px;`;
-      el.textContent = "⚾";
+        `width:${size};height:${size};background:${color};border:${border};` +
+        `border-radius:50%;cursor:pointer;box-shadow:${shadow};opacity:${opacity};` +
+        `display:flex;align-items:center;justify-content:center;font-size:${isFormer ? "8px" : "11px"};`;
+      el.textContent = isFormer ? "●" : "⚾";
+      el.title = stadium.name;
 
+      const yearLabel = isFormer ? `<span style="font-size:10px;color:#9ca3af;margin-left:4px">(former)</span>` : "";
       const popup = new mapboxgl.Popup({ offset: 16, closeButton: false, maxWidth: "200px" })
         .setHTML(
           `<div style="font-family:system-ui,sans-serif;padding:2px">` +
-          `<p style="font-weight:600;font-size:13px;margin:0 0 2px;color:#111">${stadium.name}</p>` +
+          `<p style="font-weight:600;font-size:13px;margin:0 0 2px;color:${isFormer ? "#6b7280" : "#111"}">${stadium.name}${yearLabel}</p>` +
           `<p style="font-size:11px;color:#6b7280;margin:0 0 6px">${stadium.team}</p>` +
           `<a href="/mlb/${stadium.slug}" style="font-size:11px;color:#2563eb;font-weight:500;text-decoration:none">` +
           `View details →</a>` +
@@ -66,7 +79,7 @@ export default function StadiumMap({ stadiums, height = "480px" }: Props) {
     });
 
     return () => map.remove();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [stadiums]);
 
   return (
     <div
