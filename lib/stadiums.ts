@@ -13,24 +13,26 @@ export interface Stadium {
   country: string;
   capacity: number;
   yearOpened: number;
+  yearClosed?: number;
+  status?: "active" | "former"; // undefined treated as "active"
   surface: Surface;
   roofType: RoofType;
   coordinates: { lat: number; lng: number };
   description: string;
   funFacts: string[];
-  // Trip planning
-  gettingThere: {
+  imageColor: string; // Tailwind background color for placeholder
+  // Trip planning — omitted for former stadiums
+  gettingThere?: {
     transit: string;
     parking: string;
     rideshare: string;
   };
-  stayNearby: {
+  stayNearby?: {
     budget: { name: string; distance: string };
     midRange: { name: string; distance: string };
     luxury: { name: string; distance: string };
   };
-  nearbyFood: Array<{ name: string; type: string; distance: string; note: string }>;
-  imageColor: string; // Tailwind background color for placeholder
+  nearbyFood?: Array<{ name: string; type: string; distance: string; note: string }>;
 }
 
 export const stadiums: Stadium[] = [
@@ -1206,12 +1208,145 @@ export const stadiums: Stadium[] = [
   },
 ];
 
+// ── Former stadiums ──────────────────────────────────────────────────────────
+
+export const formerStadiums: Stadium[] = [
+  {
+    id: "old-yankee-stadium",
+    slug: "old-yankee-stadium",
+    name: "Yankee Stadium (Original)",
+    team: "New York Yankees",
+    league: "AL",
+    division: "AL East",
+    city: "Bronx",
+    state: "NY",
+    country: "USA",
+    capacity: 57478,
+    yearOpened: 1923,
+    yearClosed: 2008,
+    status: "former",
+    surface: "Natural Grass",
+    roofType: "Open",
+    coordinates: { lat: 40.8285, lng: -73.9272 },
+    description: "The original House That Ruth Built was the most storied venue in baseball history. From Babe Ruth's inaugural home run to 26 World Series championships, it stood as the cathedral of American sports glory for 85 seasons before being demolished in 2009.",
+    funFacts: [
+      "Babe Ruth hit the first home run at the stadium on Opening Day, April 18, 1923.",
+      "The park hosted the famous 'Shot Heard 'Round the World' playoff radio broadcast in 1951 and six All-Star Games.",
+      "After closing in 2008, it was demolished and the site became a public park.",
+    ],
+    imageColor: "bg-slate-700",
+  },
+  {
+    id: "shea-stadium",
+    slug: "shea-stadium",
+    name: "Shea Stadium",
+    team: "New York Mets",
+    league: "NL",
+    division: "NL East",
+    city: "Flushing",
+    state: "NY",
+    country: "USA",
+    capacity: 57333,
+    yearOpened: 1964,
+    yearClosed: 2008,
+    status: "former",
+    surface: "Natural Grass",
+    roofType: "Open",
+    coordinates: { lat: 40.7569, lng: -73.8460 },
+    description: "Shea Stadium was home to the Mets for 45 seasons and site of the legendary 1969 Miracle Mets World Series triumph. The Beatles played their landmark concert there in 1965, and the park is embedded in the DNA of New York sports culture.",
+    funFacts: [
+      "The Beatles played Shea Stadium on August 15, 1965 — the first-ever major stadium rock concert, attended by 55,600 fans.",
+      "The 1969 Miracle Mets shocked the world by defeating the heavily-favored Baltimore Orioles in the World Series.",
+      "Home plate from Shea was ceremonially preserved and embedded in the concrete of Citi Field, which stands on the same site.",
+    ],
+    imageColor: "bg-blue-600",
+  },
+  {
+    id: "candlestick-park",
+    slug: "candlestick-park",
+    name: "Candlestick Park",
+    team: "San Francisco Giants",
+    league: "NL",
+    division: "NL West",
+    city: "San Francisco",
+    state: "CA",
+    country: "USA",
+    capacity: 69732,
+    yearOpened: 1960,
+    yearClosed: 1999,
+    status: "former",
+    surface: "Natural Grass",
+    roofType: "Open",
+    coordinates: { lat: 37.7114, lng: -122.3846 },
+    description: "Candlestick Park was notorious for its brutal Bay winds and bone-chilling summer fog. Fans who endured an extra-innings night game received a special 'I Survived Candlestick' button. It also hosted The Beatles' final concert and survived the 1989 earthquake.",
+    funFacts: [
+      "The Beatles played their final concert ever at Candlestick on August 29, 1966 — a 33-minute set for 25,000 fans.",
+      "Stu Miller was blown off the pitcher's mound by wind during the 1961 All-Star Game and was called for a balk.",
+      "The stadium survived the 1989 Loma Prieta earthquake, which struck during Game 3 of the World Series.",
+    ],
+    imageColor: "bg-orange-600",
+  },
+  {
+    id: "veterans-stadium",
+    slug: "veterans-stadium",
+    name: "Veterans Stadium",
+    team: "Philadelphia Phillies",
+    league: "NL",
+    division: "NL East",
+    city: "Philadelphia",
+    state: "PA",
+    country: "USA",
+    capacity: 65454,
+    yearOpened: 1971,
+    yearClosed: 2003,
+    status: "former",
+    surface: "Artificial Turf",
+    roofType: "Open",
+    coordinates: { lat: 39.9064, lng: -75.1661 },
+    description: "Veterans Stadium, known as 'The Vet,' was Philadelphia's multipurpose stadium for three decades. Famous for its notoriously hard AstroTurf, fierce Philly fans, and an actual courtroom in the basement for unruly attendees — it was imploded in 2004.",
+    funFacts: [
+      "The Vet had a working courtroom inside the stadium, staffed by a judge, to handle arrested fans on game nights.",
+      "The artificial turf was so rock-hard and fast that routine grounders regularly produced unusual bounces.",
+      "Mike Schmidt hit 265 of his 548 career home runs at The Vet, making it his personal launching pad.",
+    ],
+    imageColor: "bg-red-600",
+  },
+  {
+    id: "three-rivers-stadium",
+    slug: "three-rivers-stadium",
+    name: "Three Rivers Stadium",
+    team: "Pittsburgh Pirates",
+    league: "NL",
+    division: "NL Central",
+    city: "Pittsburgh",
+    state: "PA",
+    country: "USA",
+    capacity: 59000,
+    yearOpened: 1970,
+    yearClosed: 2000,
+    status: "former",
+    surface: "Artificial Turf",
+    roofType: "Open",
+    coordinates: { lat: 40.4468, lng: -80.0147 },
+    description: "Three Rivers Stadium stood at the confluence of the Allegheny, Monongahela, and Ohio rivers for 30 seasons. Home to the 'We Are Family' 1979 World Series champions and the great Pittsburgh teams of the 1970s, it was spectacularly imploded on February 11, 2001.",
+    funFacts: [
+      "The stadium was imploded on February 11, 2001, in a massive planned demolition broadcast live on television.",
+      "The 1979 Pirates, led by Willie 'Pops' Stargell, rallied from 3-1 down against Baltimore to win the World Series.",
+      "Roberto Clemente played here in his final full season before his tragic death in a 1972 humanitarian mission plane crash.",
+    ],
+    imageColor: "bg-yellow-600",
+  },
+];
+
+// All stadiums combined (active + former)
+export const allStadiums: Stadium[] = [...stadiums, ...formerStadiums];
+
 export function getStadiumBySlug(slug: string): Stadium | undefined {
-  return stadiums.find((s) => s.slug === slug);
+  return allStadiums.find((s) => s.slug === slug);
 }
 
 export function getAllSlugs(): string[] {
-  return stadiums.map((s) => s.slug);
+  return allStadiums.map((s) => s.slug);
 }
 
 export const divisions = [

@@ -21,15 +21,46 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               href="/"
               className="flex items-center gap-2 font-bold text-gray-900 hover:text-blue-600 transition-colors"
             >
-              <span className="text-xl">⚾</span>
+              {/* Baseball diamond SVG */}
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="w-5 h-5 flex-shrink-0"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 2L22 12L12 22L2 12Z"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
+                <line
+                  x1="12" y1="2" x2="12" y2="22"
+                  stroke="currentColor" strokeWidth="1" strokeDasharray="2 2"
+                />
+                <line
+                  x1="2" y1="12" x2="22" y2="12"
+                  stroke="currentColor" strokeWidth="1" strokeDasharray="2 2"
+                />
+                <circle cx="12" cy="2.5" r="1.3" fill="currentColor" />
+                <circle cx="21.5" cy="12" r="1.3" fill="currentColor" />
+                <circle cx="12" cy="21.5" r="1.3" fill="currentColor" />
+                <circle cx="2.5" cy="12" r="1.3" fill="currentColor" />
+              </svg>
               <span className="text-lg tracking-tight">Ballparklopedia</span>
             </Link>
-            <nav className="flex items-center gap-6 text-sm text-gray-500">
+            <nav className="flex items-center gap-5 text-sm text-gray-500">
+              <Link href="/browse" className="hover:text-gray-900 transition-colors">
+                Browse
+              </Link>
               <Link href="/" className="hover:text-gray-900 transition-colors">
-                MLB
+                Map
+              </Link>
+              <Link href="/trip-planner" className="hover:text-gray-900 transition-colors">
+                Trip Planner
               </Link>
               <Link
-                href="/?bucket=1"
+                href="/bucket-list"
                 className="flex items-center gap-1.5 hover:text-amber-600 transition-colors"
               >
                 <svg

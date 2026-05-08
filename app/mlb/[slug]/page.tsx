@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getStadiumBySlug, getAllSlugs, Stadium } from "@/lib/stadiums";
+import { getStadiumBySlug, getAllSlugs } from "@/lib/stadiums";
 import BucketListButton from "@/components/BucketListButton";
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -54,11 +54,32 @@ export default async function StadiumPage({ params }: PageProps<"/mlb/[slug]">) 
           <Badge>{stadium.division}</Badge>
           <Badge>{stadium.city}, {stadium.state}</Badge>
           <Badge>{stadium.league === "AL" ? "American League" : "National League"}</Badge>
+          {stadium.status === "former" && (
+            <Badge>Closed {stadium.yearClosed}</Badge>
+          )}
         </div>
       </div>
 
       {/* Description */}
-      <p className="text-gray-600 leading-relaxed mb-10 text-lg">{stadium.description}</p>
+      <p className="text-gray-600 leading-relaxed mb-8 text-lg">{stadium.description}</p>
+
+      {/* Satellite aerial image */}
+      {process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY && (
+        <div className="mb-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`https://maps.googleapis.com/maps/api/staticmap?center=${stadium.coordinates.lat},${stadium.coordinates.lng}&zoom=16&size=800x400&maptype=satellite&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}`}
+            alt={`Satellite aerial view of ${stadium.name}`}
+            className="w-full rounded-2xl"
+            width={800}
+            height={400}
+            loading="lazy"
+          />
+          <p className="text-xs text-gray-400 mt-1.5 text-right">
+            Aerial view · Google Maps
+          </p>
+        </div>
+      )}
 
       {/* Stats grid */}
       <Section title="Stadium Stats">
@@ -82,7 +103,8 @@ export default async function StadiumPage({ params }: PageProps<"/mlb/[slug]">) 
         </ul>
       </Section>
 
-      {/* Trip Planning */}
+      {/* Trip Planning — only for active stadiums */}
+      {stadium.gettingThere && stadium.stayNearby && stadium.nearbyFood && (
       <Section title="Plan Your Trip">
         <div className="grid sm:grid-cols-3 gap-4 mb-6">
           <TripCard
@@ -109,9 +131,9 @@ export default async function StadiumPage({ params }: PageProps<"/mlb/[slug]">) 
               <h3 className="font-semibold text-gray-800 text-sm">Where to Stay</h3>
             </div>
             <div className="space-y-3">
-              <HotelRow tier="Budget" hotel={stadium.stayNearby.budget} />
-              <HotelRow tier="Mid-range" hotel={stadium.stayNearby.midRange} />
-              <HotelRow tier="Luxury" hotel={stadium.stayNearby.luxury} />
+              <HotelRow tier="Budget" hotel={stadium.stayNearby!.budget} />
+              <HotelRow tier="Mid-range" hotel={stadium.stayNearby!.midRange} />
+              <HotelRow tier="Luxury" hotel={stadium.stayNearby!.luxury} />
             </div>
           </div>
 
@@ -125,7 +147,7 @@ export default async function StadiumPage({ params }: PageProps<"/mlb/[slug]">) 
               <h3 className="font-semibold text-gray-800 text-sm">Nearby Food</h3>
             </div>
             <div className="space-y-3">
-              {stadium.nearbyFood.map((place, i) => (
+              {stadium.nearbyFood!.map((place, i) => (
                 <div key={i} className="border-b border-gray-50 pb-2.5 last:border-0 last:pb-0">
                   <div className="flex items-start justify-between gap-1">
                     <p className="text-sm font-medium text-gray-800">{place.name}</p>
@@ -139,6 +161,7 @@ export default async function StadiumPage({ params }: PageProps<"/mlb/[slug]">) 
           </div>
         </div>
       </Section>
+      )}
 
       {/* Back link */}
       <div className="mt-12 pt-8 border-t border-gray-100">
