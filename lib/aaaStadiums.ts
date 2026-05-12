@@ -28,7 +28,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "TN",
     capacity: 10000,
     yearOpened: 2000,
-    coordinates: { lat: 35.1495, lng: -90.0490 },
+    coordinates: { lat: 35.14306, lng: -90.04917 },
     description:
       "A gorgeous brick downtown ballpark on the edge of Memphis's Beale Street entertainment district, AutoZone Park set a new standard for minor league design when it opened in 2000.",
     funFacts: [
@@ -49,7 +49,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "MN",
     capacity: 7210,
     yearOpened: 2015,
-    coordinates: { lat: 44.9487, lng: -93.0866 },
+    coordinates: { lat: 44.95086, lng: -93.08419 },
     description:
       "Nestled in St. Paul's revitalized Lowertown neighborhood, CHS Field is an intimate urban ballpark that anchored the transformation of a once-dormant rail yard into a thriving arts and entertainment hub.",
     funFacts: [
@@ -70,7 +70,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "PA",
     capacity: 10100,
     yearOpened: 2008,
-    coordinates: { lat: 40.6057, lng: -75.4699 },
+    coordinates: { lat: 40.62611, lng: -75.45250 },
     description:
       "Home to the IronPigs — named for the molten pig iron byproduct of the region's storied steel industry — Coca-Cola Park is one of the best-attended minor league parks in the country.",
     funFacts: [
@@ -91,7 +91,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NC",
     capacity: 10000,
     yearOpened: 1995,
-    coordinates: { lat: 35.9795, lng: -78.8985 },
+    coordinates: { lat: 35.99169, lng: -78.90419 },
     description:
       "The Durham Bulls are arguably the most famous team in minor league baseball, thanks to the 1988 film Bull Durham. The current ballpark, opened in 1995, carries on that legacy with a first-class facility that consistently ranks among the best in the minors.",
     funFacts: [
@@ -112,7 +112,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NY",
     capacity: 10840,
     yearOpened: 1997,
-    coordinates: { lat: 43.1566, lng: -77.6088 },
+    coordinates: { lat: 43.15827, lng: -77.61979 },
     description:
       "Originally built on the site of a former rail yard in downtown Rochester, ESL Ballpark (formerly Frontier Field) has been home to the Red Wings — one of the longest-operating franchises in minor league baseball.",
     funFacts: [
@@ -133,7 +133,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "OH",
     capacity: 10300,
     yearOpened: 2002,
-    coordinates: { lat: 41.6700, lng: -83.5551 },
+    coordinates: { lat: 41.64833, lng: -83.53889 },
     description:
       "Home to the wonderfully named Toledo Mud Hens — one of the most recognizable team names in all of baseball — Fifth Third Field has been a centerpiece of downtown Toledo's revitalization since 2002.",
     funFacts: [
@@ -154,7 +154,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "TN",
     capacity: 10000,
     yearOpened: 2015,
-    coordinates: { lat: 36.1602, lng: -86.7717 },
+    coordinates: { lat: 36.17278, lng: -86.78472 },
     description:
       "Opened in 2015 near downtown Nashville's bustling entertainment corridor, First Horizon Park brought the Sounds out of the suburbs and into the heart of Music City just as Nashville's population was exploding.",
     funFacts: [
@@ -175,7 +175,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "GA",
     capacity: 10427,
     yearOpened: 2009,
-    coordinates: { lat: 33.8554, lng: -84.0124 },
+    coordinates: { lat: 34.04058, lng: -83.99239 },
     description:
       "Built to MLB standards in rapidly growing Gwinnett County northeast of Atlanta, Gwinnett Field serves as the Braves' primary development hub and has produced a steady stream of Atlanta's most notable prospects.",
     funFacts: [
@@ -196,7 +196,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "VA",
     capacity: 11856,
     yearOpened: 1993,
-    coordinates: { lat: 36.8468, lng: -76.2963 },
+    coordinates: { lat: 36.84279, lng: -76.27887 },
     description:
       "Situated directly on the Elizabeth River waterfront in downtown Norfolk, Harbor Park is one of the most scenically situated ballparks in all of professional baseball. Naval ships are visible from the upper deck.",
     funFacts: [
@@ -217,7 +217,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "OH",
     capacity: 10100,
     yearOpened: 2009,
-    coordinates: { lat: 39.9612, lng: -83.0087 },
+    coordinates: { lat: 39.96862, lng: -83.01074 },
     description:
       "Widely regarded as one of the finest AAA parks in the country, Huntington Park anchors Columbus's Arena District — a model of urban entertainment development that has been replicated in cities across North America.",
     funFacts: [
@@ -238,7 +238,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "KY",
     capacity: 13131,
     yearOpened: 2000,
-    coordinates: { lat: 38.2566, lng: -85.7479 },
+    coordinates: { lat: 38.25619, lng: -85.74465 },
     description:
       "Named for the iconic bat brand manufactured in Louisville, Louisville Slugger Field sits at the heart of downtown Louisville near the Ohio River and the Louisville Slugger Museum — making it a pilgrimage destination for baseball fans.",
     funFacts: [
@@ -259,7 +259,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NY",
     capacity: 10815,
     yearOpened: 1997,
-    coordinates: { lat: 43.0718, lng: -76.1048 },
+    coordinates: { lat: 43.07908, lng: -76.16536 },
     description:
       "Home to the Syracuse Mets — the direct AAA affiliate of the New York Mets — NBT Bank Stadium is a classic 1990s-era ballpark that has served as the proving ground for numerous major league callups over the decades.",
     funFacts: [
@@ -280,7 +280,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "PA",
     capacity: 10000,
     yearOpened: 1989,
-    coordinates: { lat: 41.3557, lng: -75.7099 },
+    coordinates: { lat: 41.36041, lng: -75.68397 },
     description:
       "As the New York Yankees' top affiliate, PNC Field has served as one of the most watched addresses in minor league baseball — every high-profile Yankees prospect eventually passes through Moosic before reaching the Bronx.",
     funFacts: [
@@ -301,7 +301,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "MA",
     capacity: 9508,
     yearOpened: 2021,
-    coordinates: { lat: 42.3097, lng: -71.8066 },
+    coordinates: { lat: 42.25694, lng: -71.80000 },
     description:
       "The newest park in the International League, Polar Park opened in 2021 as the centerpiece of Worcester's Canal District redevelopment — bringing affiliated baseball back to New England's second-largest city for the first time in decades.",
     funFacts: [
@@ -322,7 +322,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "IA",
     capacity: 11500,
     yearOpened: 1992,
-    coordinates: { lat: 41.5868, lng: -93.6251 },
+    coordinates: { lat: 41.58028, lng: -93.61583 },
     description:
       "Principal Park sits along the Des Moines River in downtown Des Moines and has been home to the Iowa Cubs — longtime top affiliate of the Chicago Cubs — since 1992. The red brick exterior is an intentional nod to Wrigley Field.",
     funFacts: [
@@ -343,7 +343,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NY",
     capacity: 16600,
     yearOpened: 1988,
-    coordinates: { lat: 42.8876, lng: -78.8703 },
+    coordinates: { lat: 42.88131, lng: -78.87428 },
     description:
       "The oldest park currently in use in the International League, Sahlen Field has been a downtown Buffalo institution since 1988. It earned international attention in 2020 when the Toronto Blue Jays played their home games there during the pandemic.",
     funFacts: [
@@ -364,7 +364,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NC",
     capacity: 10200,
     yearOpened: 2014,
-    coordinates: { lat: 35.2258, lng: -80.8518 },
+    coordinates: { lat: 35.22799, lng: -80.84901 },
     description:
       "Located in uptown Charlotte just steps from Bank of America Stadium, Truist Field brought the Knights in from the suburbs in 2014 and placed them at the center of one of the fastest-growing cities in the Southeast.",
     funFacts: [
@@ -385,7 +385,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "IN",
     capacity: 13750,
     yearOpened: 1996,
-    coordinates: { lat: 39.7736, lng: -86.1651 },
+    coordinates: { lat: 39.76500, lng: -86.16833 },
     description:
       "Repeatedly voted the best minor league park in America by Baseball America, Victory Field is situated adjacent to White River State Park in downtown Indianapolis — combining natural scenery with a first-class baseball experience.",
     funFacts: [
@@ -406,7 +406,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "FL",
     capacity: 11000,
     yearOpened: 2003,
-    coordinates: { lat: 30.3242, lng: -81.6555 },
+    coordinates: { lat: 30.32497, lng: -81.64307 },
     description:
       "Situated on the north bank of the St. Johns River in downtown Jacksonville, VyStar Ballpark offers some of the most unique sightlines in minor league baseball — with the river and the city's dramatic Hart Bridge as a backdrop.",
     funFacts: [
@@ -427,7 +427,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NE",
     capacity: 9023,
     yearOpened: 2011,
-    coordinates: { lat: 41.1282, lng: -96.0626 },
+    coordinates: { lat: 41.15196, lng: -96.10639 },
     description:
       "Built in suburban Papillon to replace the legendary Rosenblatt Stadium, Werner Park is the home of the Omaha Storm Chasers and sits just south of the Omaha metro in one of the fastest-growing parts of Nebraska.",
     funFacts: [
@@ -450,7 +450,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "WA",
     capacity: 6500,
     yearOpened: 1960,
-    coordinates: { lat: 47.2357, lng: -122.4848 },
+    coordinates: { lat: 47.23803, lng: -122.49754 },
     description:
       "One of the oldest continuously operating minor league parks in the country, Cheney Stadium underwent a transformative renovation in 2011 that preserved its intimate character while adding modern amenities. The views of Mount Rainier on clear days are unmatched.",
     funFacts: [
@@ -471,7 +471,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "OK",
     capacity: 9000,
     yearOpened: 1998,
-    coordinates: { lat: 35.4673, lng: -97.5083 },
+    coordinates: { lat: 35.46496, lng: -97.50805 },
     description:
       "The anchor of Oklahoma City's Bricktown entertainment district, Chickasaw Bricktown Ballpark has been at the center of one of the most successful urban revitalization stories in the American Midwest — helping transform a once-derelict warehouse district into a thriving destination.",
     funFacts: [
@@ -492,7 +492,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "TX",
     capacity: 7500,
     yearOpened: 2012,
-    coordinates: { lat: 29.5958, lng: -95.6349 },
+    coordinates: { lat: 29.62275, lng: -95.64718 },
     description:
       "Home to the Space Cowboys — a name that pays tribute to both Houston's NASA legacy and Texas's cowboy culture — Constellation Field is a modern suburban ballpark serving one of the fastest-growing counties in the United States.",
     funFacts: [
@@ -513,7 +513,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "TX",
     capacity: 11631,
     yearOpened: 2000,
-    coordinates: { lat: 30.5086, lng: -97.6837 },
+    coordinates: { lat: 30.52730, lng: -97.63050 },
     description:
       "Named for Dell Technologies, which was founded in Round Rock and remains one of the city's largest employers, Dell Diamond has been one of the most consistently well-attended minor league parks in the country since opening in 2000.",
     funFacts: [
@@ -534,7 +534,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NV",
     capacity: 9013,
     yearOpened: 2009,
-    coordinates: { lat: 39.5296, lng: -119.8138 },
+    coordinates: { lat: 39.52900, lng: -119.80800 },
     description:
       "Located in downtown Reno, Greater Nevada Field is well-known throughout the PCL for its hitter-friendly conditions — the combination of altitude, dry air, and Nevada heat creates one of the most homer-happy environments in professional baseball.",
     funFacts: [
@@ -555,7 +555,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NV",
     capacity: 10000,
     yearOpened: 2019,
-    coordinates: { lat: 36.2204, lng: -115.2523 },
+    coordinates: { lat: 36.15228, lng: -115.32942 },
     description:
       "One of the newest and most lavish parks in all of professional baseball, Las Vegas Ballpark opened in 2019 in Downtown Summerlin and features a pool beyond the outfield wall — quintessentially Vegas.",
     funFacts: [
@@ -576,7 +576,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "NM",
     capacity: 13500,
     yearOpened: 2003,
-    coordinates: { lat: 35.0963, lng: -106.6516 },
+    coordinates: { lat: 35.06972, lng: -106.62917 },
     description:
       "Home to the Albuquerque Isotopes — whose very name was inspired by a Simpsons episode — Isotopes Park sits at over 5,000 feet of elevation, making it one of the most homer-friendly parks on the planet and a nightmare for pitching statistics.",
     funFacts: [
@@ -597,7 +597,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "TX",
     capacity: 9500,
     yearOpened: 2014,
-    coordinates: { lat: 31.7619, lng: -106.4987 },
+    coordinates: { lat: 31.75903, lng: -106.49267 },
     description:
       "Perched on the US-Mexico border in downtown El Paso, Southwest University Park is one of the most geographically dramatic parks in professional baseball — with views into Ciudad Juárez, Mexico, visible from the upper concourse.",
     funFacts: [
@@ -618,7 +618,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "CA",
     capacity: 14014,
     yearOpened: 2000,
-    coordinates: { lat: 38.5799, lng: -121.5142 },
+    coordinates: { lat: 38.58037, lng: -121.51380 },
     description:
       "Located on the banks of the Sacramento River in West Sacramento, Sutter Health Park is one of the most beloved and best-attended parks in the Pacific Coast League, regularly drawing some of the highest crowds in all of Triple-A baseball.",
     funFacts: [
@@ -639,7 +639,7 @@ export const aaaStadiums: AAAStadium[] = [
     state: "UT",
     capacity: 8500,
     yearOpened: 2025,
-    coordinates: { lat: 40.5416, lng: -111.9383 },
+    coordinates: { lat: 40.54970, lng: -112.02250 },
     description:
       "The newest ballpark in all of professional baseball, The Ballpark at America First Square opened in 2025 in South Jordan, Utah, replacing the aging Smith's Ballpark that had served Salt Lake City since 1994. The Wasatch Mountains provide a stunning backdrop.",
     funFacts: [
