@@ -3,9 +3,8 @@ import { stadiums, formerStadiums } from "@/lib/stadiums";
 import { aaaStadiums } from "@/lib/aaaStadiums";
 
 export default function HomePage() {
-  const totalCapacity = stadiums.reduce((sum, s) => sum + s.capacity, 0);
-  const oldest = stadiums.reduce((a, b) => (a.yearOpened < b.yearOpened ? a : b));
-  const newest = stadiums.reduce((a, b) => (a.yearOpened > b.yearOpened ? a : b));
+  const totalMLB = stadiums.length;
+  const totalParks = stadiums.length + formerStadiums.length + aaaStadiums.length;
 
   const currentMapData = stadiums.map((s) => ({
     slug: s.slug,
@@ -30,7 +29,7 @@ export default function HomePage() {
     name: s.name,
     team: s.team,
     coordinates: s.coordinates,
-    division: s.minorLeague, // "IL" or "PCL" — used for color in StadiumMap
+    division: s.minorLeague,
     type: "aaa" as const,
   }));
 
@@ -39,25 +38,17 @@ export default function HomePage() {
       {/* Hero */}
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 tracking-tight">
-          Every MLB Ballpark,<br className="sm:hidden" /> in One Place
+          Every Baseball Ballpark,<br className="sm:hidden" /> One Place
         </h1>
         <p className="text-gray-500 text-lg max-w-xl">
-          Stats, trip planning, and bucket lists for every Major League Baseball stadium — past and present.
+          The encyclopedia of baseball stadiums — stats, history, trip planning, and bucket lists across MLB, the minor leagues, and beyond.
         </p>
 
         {/* Quick stats */}
         <div className="mt-6 flex flex-wrap gap-3">
-          <QuickStat label="Active Stadiums" value={stadiums.length.toString()} />
-          <QuickStat label="Former Stadiums" value={formerStadiums.length.toString()} />
-          <QuickStat label="Total Capacity" value={totalCapacity.toLocaleString()} />
-          <QuickStat
-            label="Oldest Active Park"
-            value={`${oldest.name.split(" ")[0]} (${oldest.yearOpened})`}
-          />
-          <QuickStat
-            label="Newest Active Park"
-            value={`${newest.name.split(" ")[0]} (${newest.yearOpened})`}
-          />
+          <QuickStat label="MLB Parks" value={totalMLB.toString()} />
+          <QuickStat label="AAA Parks" value={aaaStadiums.length.toString()} />
+          <QuickStat label="Total Parks" value={totalParks.toString()} />
         </div>
       </div>
 

@@ -6,9 +6,9 @@ import Link from "next/link";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Ballparklopedia — MLB Stadium Directory",
+  title: "Ballparklopedia — The Baseball Stadium Encyclopedia",
   description:
-    "Your complete guide to every MLB stadium. Stats, trip planning, and bucket lists for baseball fans.",
+    "The encyclopedia of baseball stadiums. Stats, history, trip planning, and bucket lists for every MLB and minor league ballpark.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -88,7 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="border-t border-gray-100 mt-20 py-10">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center text-sm text-gray-400">
             <p className="font-semibold text-gray-600 mb-1">⚾ Ballparklopedia</p>
-            <p>A fan&apos;s guide to every MLB ballpark. Plan your stadium tour.</p>
+            <p>The encyclopedia of baseball stadiums — MLB, minor leagues, and beyond.</p>
           </div>
         </footer>
       </body>
