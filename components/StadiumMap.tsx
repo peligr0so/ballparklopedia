@@ -49,14 +49,39 @@ export default function StadiumMap({ stadiums, height = "480px" }: Props) {
 
     mapboxgl.accessToken = token;
 
+    // Compute initial center from stadiums so the map opens on the right region
+    let initCenter: [number, number] = [-96, 38];
+    let initZoom = 3.5;
+    if (stadiums.length > 0) {
+      const lngs = stadiums.map((s) => s.coordinates.lng);
+      const lats = stadiums.map((s) => s.coordinates.lat);
+      initCenter = [
+        (Math.min(...lngs) + Math.max(...lngs)) / 2,
+        (Math.min(...lats) + Math.max(...lats)) / 2,
+      ];
+    }
+
     const map = new mapboxgl.Map({
       container: containerRef.current,
       style: "mapbox://styles/mapbox/light-v11",
-      center: [-96, 38],
-      zoom: 3.5,
+      center: initCenter,
+      zoom: initZoom,
     });
 
     map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), "top-right");
+
+    // Fit bounds to all stadiums once the style loads so zoom is appropriate too
+    if (stadiums.length > 0) {
+      const lngs = stadiums.map((s) => s.coordinates.lng);
+      const lats = stadiums.map((s) => s.coordinates.lat);
+      const bounds: mapboxgl.LngLatBoundsLike = [
+        [Math.min(...lngs), Math.min(...lats)],
+        [Math.max(...lngs), Math.max(...lats)],
+      ];
+      map.on("load", () => {
+        map.fitBounds(bounds, { padding: 60, maxZoom: 9, duration: 0 });
+      });
+    }
 
     stadiums.forEach((stadium) => {
       const isAAA = stadium.type === "aaa";
