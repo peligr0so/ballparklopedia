@@ -1,10 +1,12 @@
 import MapSection from "@/components/MapSection";
 import { stadiums, formerStadiums } from "@/lib/stadiums";
 import { aaaStadiums } from "@/lib/aaaStadiums";
+import { npbStadiums, kboStadiums, countrySlug } from "@/lib/internationalStadiums";
 
 export default function HomePage() {
   const totalMLB = stadiums.length;
-  const totalParks = stadiums.length + formerStadiums.length + aaaStadiums.length;
+  const totalIntl = npbStadiums.length + kboStadiums.length;
+  const totalParks = stadiums.length + formerStadiums.length + aaaStadiums.length + totalIntl;
 
   const currentMapData = stadiums.map((s) => ({
     slug: s.slug,
@@ -33,6 +35,26 @@ export default function HomePage() {
     type: "aaa" as const,
   }));
 
+  const japanMapData = npbStadiums.map((s) => ({
+    slug: s.slug,
+    name: s.name,
+    team: s.team,
+    coordinates: s.coordinates,
+    division: "NPB" as const,
+    type: "international" as const,
+    countrySlug: countrySlug[s.country],
+  }));
+
+  const koreaMapData = kboStadiums.map((s) => ({
+    slug: s.slug,
+    name: s.name,
+    team: s.team,
+    coordinates: s.coordinates,
+    division: "KBO" as const,
+    type: "international" as const,
+    countrySlug: countrySlug[s.country],
+  }));
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
       {/* Hero */}
@@ -48,6 +70,8 @@ export default function HomePage() {
         <div className="mt-6 flex flex-wrap gap-3">
           <QuickStat label="MLB Parks" value={totalMLB.toString()} />
           <QuickStat label="AAA Parks" value={aaaStadiums.length.toString()} />
+          <QuickStat label="🇯🇵 NPB Parks" value={npbStadiums.length.toString()} />
+          <QuickStat label="🇰🇷 KBO Parks" value={kboStadiums.length.toString()} />
           <QuickStat label="Total Parks" value={totalParks.toString()} />
         </div>
       </div>
@@ -57,6 +81,8 @@ export default function HomePage() {
         currentStadiums={currentMapData}
         formerStadiums={formerMapData}
         aaaStadiums={aaaMapData}
+        japanStadiums={japanMapData}
+        koreaStadiums={koreaMapData}
       />
     </div>
   );

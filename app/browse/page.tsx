@@ -2,6 +2,13 @@ import Link from "next/link";
 import { allStadiums, Stadium } from "@/lib/stadiums";
 import { ilStadiums, pclStadiums, type AAAStadium } from "@/lib/aaaStadiums";
 import {
+  npbCentralStadiums,
+  npbPacificStadiums,
+  kboStadiums,
+  countrySlug,
+  type InternationalStadium,
+} from "@/lib/internationalStadiums";
+import {
   FRANCHISES,
   DIVISION_ORDER,
   getFranchiseId,
@@ -67,7 +74,7 @@ export default function BrowsePage() {
           Browse Ballparks
         </h1>
         <p className="text-gray-500">
-          MLB franchises and AAA parks — current stadiums, historic venues, and all 30 Triple-A ballparks.
+          MLB franchises, AAA parks, and international leagues — current stadiums, historic venues, and ballparks around the world.
         </p>
       </div>
 
@@ -105,6 +112,42 @@ export default function BrowsePage() {
 
       <AAALeagueSection title="International League" stadiums={ilStadiums} dotColor="#16a34a" />
       <AAALeagueSection title="Pacific Coast League" stadiums={pclStadiums} dotColor="#0891b2" />
+
+      {/* Divider */}
+      <div className="border-t border-gray-100 my-12" />
+
+      {/* International section */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-sm font-bold text-gray-800 mb-1">International</h2>
+            <p className="text-xs text-gray-400">
+              Top-level pro baseball in Japan (NPB) and South Korea (KBO).
+            </p>
+          </div>
+          <Link
+            href="/international"
+            className="text-xs text-orange-700 hover:text-orange-900 font-medium transition-colors"
+          >
+            View all international parks →
+          </Link>
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <span className="text-base">🇯🇵</span> Japan · NPB
+        </h3>
+        <IntlLeagueSection title="Central League" stadiums={npbCentralStadiums} dotColor="#f97316" />
+        <IntlLeagueSection title="Pacific League" stadiums={npbPacificStadiums} dotColor="#f97316" />
+      </div>
+
+      <div className="mb-6">
+        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <span className="text-base">🇰🇷</span> South Korea · KBO
+        </h3>
+        <IntlLeagueSection title="KBO" stadiums={kboStadiums} dotColor="#8b5cf6" />
+      </div>
     </div>
   );
 }
@@ -242,6 +285,65 @@ function StadiumRow({
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
       </svg>
     </Link>
+  );
+}
+
+function IntlLeagueSection({
+  title,
+  stadiums,
+  dotColor,
+}: {
+  title: string;
+  stadiums: InternationalStadium[];
+  dotColor: string;
+}) {
+  return (
+    <div className="mb-8">
+      <h4 className="text-xs font-semibold text-gray-400 mb-3 flex items-center gap-2">
+        <span
+          className="inline-block w-2 h-2 rounded-full"
+          style={{ background: dotColor }}
+        />
+        {title}
+      </h4>
+      <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+        {stadiums.map((s, i) => (
+          <Link
+            key={s.slug}
+            href={`/international/${countrySlug[s.country]}/${s.slug}`}
+            className={`flex items-center gap-4 px-5 py-3 hover:bg-gray-50 transition-colors group ${
+              i > 0 ? "border-t border-gray-50" : ""
+            }`}
+          >
+            <span
+              className="w-2 h-2 rounded-full flex-shrink-0"
+              style={{ background: dotColor }}
+            />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-gray-900 truncate group-hover:text-orange-600 transition-colors">
+                {s.name}
+              </p>
+              <p className="text-xs text-gray-400 mt-0.5">{s.nameLocal}</p>
+              <p className="text-xs text-gray-400 mt-0.5">{s.team} · {s.city}</p>
+            </div>
+            <div className="text-right flex-shrink-0 hidden sm:block">
+              <p className="text-xs font-medium text-gray-600">
+                {s.capacity.toLocaleString()}
+              </p>
+              <p className="text-xs text-gray-400">capacity</p>
+            </div>
+            <svg
+              className="w-4 h-4 text-gray-300 group-hover:text-orange-400 transition-colors flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 

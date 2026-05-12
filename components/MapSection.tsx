@@ -19,21 +19,26 @@ type MapStadium = {
   coordinates: { lat: number; lng: number };
   division: string;
   status?: "active" | "former";
-  type?: "mlb" | "aaa";
+  type?: "mlb" | "aaa" | "international";
+  countrySlug?: string;
 };
 
 interface Props {
   currentStadiums: MapStadium[];
   formerStadiums: MapStadium[];
   aaaStadiums?: MapStadium[];
+  japanStadiums?: MapStadium[];
+  koreaStadiums?: MapStadium[];
 }
 
-type Layer = "current" | "former" | "aaa";
+type Layer = "current" | "former" | "aaa" | "japan" | "korea";
 
 export default function MapSection({
   currentStadiums,
   formerStadiums,
   aaaStadiums = [],
+  japanStadiums = [],
+  koreaStadiums = [],
 }: Props) {
   const [activeLayers, setActiveLayers] = useState<Set<Layer>>(new Set(["current"]));
 
@@ -54,11 +59,15 @@ export default function MapSection({
     ...(activeLayers.has("current") ? currentStadiums : []),
     ...(activeLayers.has("former") ? formerStadiums : []),
     ...(activeLayers.has("aaa") ? aaaStadiums : []),
+    ...(activeLayers.has("japan") ? japanStadiums : []),
+    ...(activeLayers.has("korea") ? koreaStadiums : []),
   ];
 
   const showingCurrent = activeLayers.has("current");
   const showingFormer = activeLayers.has("former");
   const showingAAA = activeLayers.has("aaa");
+  const showingJapan = activeLayers.has("japan");
+  const showingKorea = activeLayers.has("korea");
 
   return (
     <div>
@@ -88,10 +97,28 @@ export default function MapSection({
               onClick={() => toggleLayer("aaa")}
             />
           )}
+          {japanStadiums.length > 0 && (
+            <LayerToggle
+              label="🇯🇵 NPB"
+              active={showingJapan}
+              count={japanStadiums.length}
+              dotColor="#f97316"
+              onClick={() => toggleLayer("japan")}
+            />
+          )}
+          {koreaStadiums.length > 0 && (
+            <LayerToggle
+              label="🇰🇷 KBO"
+              active={showingKorea}
+              count={koreaStadiums.length}
+              dotColor="#8b5cf6"
+              onClick={() => toggleLayer("korea")}
+            />
+          )}
         </div>
 
-        {/* Division legend — only show when MLB current is active */}
-        {showingCurrent && !showingAAA && (
+        {/* Division legend — only show when MLB current is active and no other layers */}
+        {showingCurrent && !showingAAA && !showingJapan && !showingKorea && (
           <div className="flex flex-wrap gap-x-3 gap-y-1">
             {Object.entries(DIVISION_COLORS).map(([div, color]) => (
               <span key={div} className="flex items-center gap-1 text-xs text-gray-500">
@@ -106,7 +133,7 @@ export default function MapSection({
         )}
 
         {/* AAA legend */}
-        {showingAAA && (
+        {showingAAA && !showingJapan && !showingKorea && (
           <div className="flex flex-wrap gap-x-3 gap-y-1">
             <span className="flex items-center gap-1 text-xs text-gray-500">
               <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#16a34a" }} />
@@ -116,6 +143,24 @@ export default function MapSection({
               <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#0891b2" }} />
               Pacific Coast League
             </span>
+          </div>
+        )}
+
+        {/* International legend */}
+        {(showingJapan || showingKorea) && (
+          <div className="flex flex-wrap gap-x-3 gap-y-1">
+            {showingJapan && (
+              <span className="flex items-center gap-1 text-xs text-gray-500">
+                <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#f97316" }} />
+                🇯🇵 NPB
+              </span>
+            )}
+            {showingKorea && (
+              <span className="flex items-center gap-1 text-xs text-gray-500">
+                <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#8b5cf6" }} />
+                🇰🇷 KBO
+              </span>
+            )}
           </div>
         )}
       </div>

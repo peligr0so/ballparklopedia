@@ -18,14 +18,21 @@ const AAA_COLORS: Record<string, string> = {
   PCL: "#0891b2",
 };
 
+const INTL_COLORS: Record<string, string> = {
+  NPB: "#f97316",  // orange for Japan
+  KBO: "#8b5cf6",  // purple for South Korea
+};
+
 export type MapStadium = {
   slug: string;
   name: string;
   team: string;
   coordinates: { lat: number; lng: number };
-  division: string; // MLB division, or "IL"/"PCL" for AAA
+  division: string; // MLB division, "IL"/"PCL" for AAA, "NPB"/"KBO" for international
   status?: "active" | "former";
-  type?: "mlb" | "aaa"; // default "mlb"
+  type?: "mlb" | "aaa" | "international";
+  // For international: country slug used to build the link path
+  countrySlug?: string;
 };
 
 interface Props {
@@ -53,6 +60,7 @@ export default function StadiumMap({ stadiums, height = "480px" }: Props) {
 
     stadiums.forEach((stadium) => {
       const isAAA = stadium.type === "aaa";
+      const isIntl = stadium.type === "international";
       const isFormer = stadium.status === "former";
 
       let color: string;
@@ -62,7 +70,14 @@ export default function StadiumMap({ stadiums, height = "480px" }: Props) {
       let opacity: string;
       let label: string;
 
-      if (isAAA) {
+      if (isIntl) {
+        color = INTL_COLORS[stadium.division] ?? "#f97316";
+        size = "22px";
+        border = "2px solid white";
+        shadow = "0 1px 5px rgba(0,0,0,0.25)";
+        opacity = "1";
+        label = "★";
+      } else if (isAAA) {
         color = AAA_COLORS[stadium.division] ?? "#16a34a";
         size = "20px";
         border = "2px solid white";
@@ -89,16 +104,26 @@ export default function StadiumMap({ stadiums, height = "480px" }: Props) {
       el.style.cssText =
         `width:${size};height:${size};background:${color};border:${border};` +
         `border-radius:50%;cursor:pointer;box-shadow:${shadow};opacity:${opacity};` +
-        `display:flex;align-items:center;justify-content:center;font-size:${isAAA ? "8px" : isFormer ? "8px" : "11px"};`;
+        `display:flex;align-items:center;justify-content:center;font-size:${isIntl ? "9px" : isAAA ? "8px" : isFormer ? "8px" : "11px"};`;
       el.textContent = label;
       el.title = stadium.name;
 
-      const linkPath = isAAA ? `/aaa/${stadium.slug}` : `/mlb/${stadium.slug}`;
+      let linkPath: string;
+      if (isIntl) {
+        linkPath = `/international/${stadium.countrySlug}/${stadium.slug}`;
+      } else if (isAAA) {
+        linkPath = `/aaa/${stadium.slug}`;
+      } else {
+        linkPath = `/mlb/${stadium.slug}`;
+      }
+
       const yearLabel = isFormer
         ? `<span style="font-size:10px;color:#9ca3af;margin-left:4px">(former)</span>`
         : "";
       const leagueTag = isAAA
         ? `<span style="font-size:10px;color:#16a34a;margin-left:4px">AAA · ${stadium.division}</span>`
+        : isIntl
+        ? `<span style="font-size:10px;color:#f97316;margin-left:4px">${stadium.division}</span>`
         : "";
 
       const popup = new mapboxgl.Popup({ offset: 16, closeButton: false, maxWidth: "210px" })
