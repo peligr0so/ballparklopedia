@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getStadiumBySlug, getAllSlugs } from "@/lib/stadiums";
+import { getStadiumBySlug, getAllSlugs, type FirstGame, type Tenant, type StadiumRecord } from "@/lib/stadiums";
 import BucketListButton from "@/components/BucketListButton";
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -88,8 +88,55 @@ export default async function StadiumPage({ params }: PageProps<"/mlb/[slug]">) 
           <StatCard label="Year Opened" value={stadium.yearOpened.toString()} />
           <StatCard label="Surface" value={stadium.surface} />
           <StatCard label="Roof Type" value={stadium.roofType} />
+          {stadium.elevationFt != null && (
+            <StatCard label="Elevation" value={`${stadium.elevationFt.toLocaleString()} ft`} />
+          )}
+          {stadium.constructionCost && (
+            <StatCard label="Construction Cost" value={stadium.constructionCost} />
+          )}
+          <StatCard
+            label="Coordinates"
+            value={`${stadium.coordinates.lat.toFixed(4)}, ${stadium.coordinates.lng.toFixed(4)}`}
+          />
         </div>
       </Section>
+
+      {/* Tenants */}
+      {stadium.tenants && stadium.tenants.length > 0 && (
+        <Section title="Tenants">
+          <TenantsTable tenants={stadium.tenants} />
+        </Section>
+      )}
+
+      {/* Historic Firsts */}
+      {(stadium.firstGame || stadium.firstHit || stadium.firstHomeRun || stadium.longestHomeRun) && (
+        <Section title="Historic Firsts &amp; Records">
+          <div className="space-y-3">
+            {stadium.firstGame && <FirstGameRow game={stadium.firstGame} />}
+            {stadium.firstHit && (
+              <RecordRow
+                label="First Hit"
+                value={`${stadium.firstHit.player}`}
+                sub={stadium.firstHit.team}
+              />
+            )}
+            {stadium.firstHomeRun && (
+              <RecordRow
+                label="First Home Run"
+                value={`${stadium.firstHomeRun.player}`}
+                sub={stadium.firstHomeRun.team}
+              />
+            )}
+            {stadium.longestHomeRun && (
+              <RecordRow
+                label="Longest Home Run"
+                value={`${stadium.longestHomeRun.player}`}
+                sub={`${stadium.longestHomeRun.detail}${stadium.longestHomeRun.team ? ` · ${stadium.longestHomeRun.team}` : ""}`}
+              />
+            )}
+          </div>
+        </Section>
+      )}
 
       {/* Fun Facts */}
       <Section title="Did You Know?">
@@ -231,6 +278,52 @@ function TripCard({
           <p className="text-xs text-gray-500 leading-relaxed">{s.text}</p>
         </div>
       ))}
+    </div>
+  );
+}
+
+function TenantsTable({ tenants }: { tenants: Tenant[] }) {
+  return (
+    <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+      {tenants.map((t, i) => (
+        <div
+          key={i}
+          className={`flex items-center justify-between gap-4 px-5 py-3 ${i > 0 ? "border-t border-gray-50" : ""}`}
+        >
+          <div>
+            <span className="text-sm font-medium text-gray-900">{t.name}</span>
+            {t.sport && (
+              <span className="ml-2 text-xs text-gray-400">({t.sport})</span>
+            )}
+          </div>
+          <span className="text-sm text-gray-500 flex-shrink-0">{t.years}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FirstGameRow({ game }: { game: FirstGame }) {
+  return (
+    <div className="bg-white border border-gray-100 rounded-2xl px-5 py-4">
+      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">First Game</p>
+      <p className="text-sm font-medium text-gray-900 mb-1">{game.date}</p>
+      <p className="text-sm text-gray-600">
+        {game.awayTeam} at {game.homeTeam} — <span className="font-medium">{game.score}</span>
+      </p>
+      {game.winningPitcher && (
+        <p className="text-xs text-gray-400 mt-1">WP: {game.winningPitcher}</p>
+      )}
+    </div>
+  );
+}
+
+function RecordRow({ label, value, sub }: { label: string; value: string; sub?: string }) {
+  return (
+    <div className="bg-white border border-gray-100 rounded-2xl px-5 py-4">
+      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">{label}</p>
+      <p className="text-sm font-medium text-gray-900">{value}</p>
+      {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
     </div>
   );
 }

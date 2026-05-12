@@ -1,6 +1,26 @@
 export type Surface = "Natural Grass" | "Artificial Turf" | "Hybrid";
 export type RoofType = "Open" | "Fixed Dome" | "Retractable" | "Partially Open";
 
+export interface Tenant {
+  name: string;
+  sport?: string; // omit for the primary baseball tenant
+  years: string; // e.g. "1992–present" or "1960–1981"
+}
+
+export interface FirstGame {
+  date: string; // e.g. "April 6, 1992"
+  homeTeam: string;
+  awayTeam: string;
+  score?: string; // e.g. "2–0"
+  winningPitcher?: string;
+}
+
+export interface StadiumRecord {
+  player: string;
+  team?: string;
+  detail: string; // distance, date, or other context
+}
+
 export interface Stadium {
   id: string;
   slug: string;
@@ -21,6 +41,14 @@ export interface Stadium {
   description: string;
   funFacts: string[];
   imageColor: string; // Tailwind background color for placeholder
+  // Detail enrichment fields
+  elevationFt?: number;
+  constructionCost?: string; // e.g. "$1.2B (2012)"
+  tenants?: Tenant[];
+  firstGame?: FirstGame;
+  firstHit?: { player: string; team: string };
+  firstHomeRun?: { player: string; team: string };
+  longestHomeRun?: StadiumRecord;
   // Trip planning — omitted for former stadiums
   gettingThere?: {
     transit: string;
@@ -74,6 +102,18 @@ export const stadiums: Stadium[] = [
       { name: "LP Steamers", type: "Crab House", distance: "1.4 mi", note: "Classic Maryland steamed crabs on picnic tables." },
     ],
     imageColor: "bg-orange-500",
+
+    constructionCost: "$110M (1992)",
+    tenants: [
+      { name: "Baltimore Orioles", years: "1992–present" },
+    ],
+    firstGame: {
+      date: "April 6, 1992",
+      homeTeam: "Baltimore Orioles",
+      awayTeam: "Cleveland Indians",
+    },
+    firstHit: { player: "Paul Sorrento", team: "Cleveland Indians" },
+    firstHomeRun: { player: "Paul Sorrento", team: "Cleveland Indians" },
   },
   {
     id: "fenway-park",
@@ -113,6 +153,18 @@ export const stadiums: Stadium[] = [
       { name: "Island Creek Oyster Bar", type: "Seafood", distance: "0.3 mi", note: "Stellar oysters and New England seafood in the Kenmore area." },
     ],
     imageColor: "bg-red-700",
+
+    constructionCost: "$650,000 (1912)",
+    tenants: [
+      { name: "Boston Red Sox", years: "1912–present" },
+    ],
+    firstGame: {
+      date: "April 20, 1912",
+      homeTeam: "Boston Red Sox",
+      awayTeam: "New York Highlanders",
+      score: "7–6",
+    },
+    longestHomeRun: { player: "Ted Williams", team: "Boston Red Sox", detail: "502 ft, June 9, 1946" },
   },
   {
     id: "yankee-stadium",
@@ -152,6 +204,18 @@ export const stadiums: Stadium[] = [
       { name: "Papaye", type: "West African / Caribbean", distance: "0.8 mi", note: "Vibrant Ghanaian-Caribbean restaurant near the stadium." },
     ],
     imageColor: "bg-slate-800",
+
+    constructionCost: "$2.3B (2009)",
+    tenants: [
+      { name: "New York Yankees", years: "2009–present" },
+      { name: "New York City FC", sport: "MLS", years: "2015–present" },
+      { name: "Pinstripe Bowl", sport: "NCAA Football", years: "2010–present" },
+    ],
+    firstGame: {
+      date: "April 16, 2009",
+      homeTeam: "New York Yankees",
+      awayTeam: "Cleveland Indians",
+    },
   },
   {
     id: "citi-field",
@@ -191,6 +255,18 @@ export const stadiums: Stadium[] = [
       { name: "Corner Bistro", type: "Bar & Burger", distance: "10 mi (Manhattan)", note: "Worth the trip for the legendary Bistro Burger." },
     ],
     imageColor: "bg-blue-700",
+
+    constructionCost: "$900M (2009)",
+    tenants: [
+      { name: "New York Mets", years: "2009–present" },
+      { name: "New York City FC", sport: "MLS", years: "2022–present (part-time)" },
+    ],
+    firstGame: {
+      date: "April 13, 2009",
+      homeTeam: "New York Mets",
+      awayTeam: "San Diego Padres",
+    },
+    firstHomeRun: { player: "Jody Gerut", team: "San Diego Padres" },
   },
   {
     id: "rogers-centre",
@@ -230,6 +306,20 @@ export const stadiums: Stadium[] = [
       { name: "Kensington Market", type: "Food District", distance: "1.5 mi", note: "Eclectic neighborhood with global street food." },
     ],
     imageColor: "bg-sky-600",
+
+    constructionCost: "C$570M (1989)",
+    tenants: [
+      { name: "Toronto Blue Jays", years: "1989–2019, 2021–present" },
+      { name: "Toronto Argonauts", sport: "CFL", years: "1989–2015" },
+      { name: "Toronto Raptors", sport: "NBA", years: "1995–1999" },
+    ],
+    firstGame: {
+      date: "June 5, 1989",
+      homeTeam: "Toronto Blue Jays",
+      awayTeam: "Milwaukee Brewers",
+      score: "5–3",
+    },
+    firstHit: { player: "Paul Molitor", team: "Milwaukee Brewers" },
   },
   {
     id: "tropicana-field",
@@ -269,6 +359,13 @@ export const stadiums: Stadium[] = [
       { name: "Sea Salt", type: "Seafood", distance: "1.9 mi", note: "Outstanding fresh seafood in downtown St. Pete." },
     ],
     imageColor: "bg-indigo-600",
+
+    constructionCost: "$130M (1990)",
+    tenants: [
+      { name: "Tampa Bay Storm", sport: "AFL", years: "1991–1996" },
+      { name: "Tampa Bay Lightning", sport: "NHL", years: "1993–1996" },
+      { name: "Tampa Bay Rays", years: "1998–present" },
+    ],
   },
   {
     id: "guaranteed-rate-field",
@@ -308,6 +405,17 @@ export const stadiums: Stadium[] = [
       { name: "Nicky's Hot Dogs", type: "Hot Dogs", distance: "1.2 mi", note: "South Side Chicago hot dogs done right." },
     ],
     imageColor: "bg-gray-900",
+
+    constructionCost: "$137M (1991)",
+    tenants: [
+      { name: "Chicago White Sox", years: "1991–present" },
+    ],
+    firstGame: {
+      date: "April 18, 1991",
+      homeTeam: "Chicago White Sox",
+      awayTeam: "Detroit Tigers",
+      score: "16–0",
+    },
   },
   {
     id: "progressive-field",
@@ -347,6 +455,19 @@ export const stadiums: Stadium[] = [
       { name: "Barrio", type: "Tacos", distance: "0.4 mi", note: "Build-your-own tacos, great for pregame fuel." },
     ],
     imageColor: "bg-red-600",
+
+    constructionCost: "$175M (1994)",
+    tenants: [
+      { name: "Cleveland Guardians", years: "1994–present" },
+    ],
+    firstGame: {
+      date: "April 4, 1994",
+      homeTeam: "Cleveland Indians",
+      awayTeam: "Seattle Mariners",
+      winningPitcher: "Eric Plunk",
+    },
+    firstHit: { player: "Eric Anthony", team: "Seattle Mariners" },
+    firstHomeRun: { player: "Eric Anthony", team: "Seattle Mariners" },
   },
   {
     id: "comerica-park",
@@ -386,6 +507,16 @@ export const stadiums: Stadium[] = [
       { name: "Supino Pizzeria", type: "Pizza", distance: "1.5 mi", note: "Thin-crust Neapolitan-style pizza in Eastern Market." },
     ],
     imageColor: "bg-blue-800",
+
+    tenants: [
+      { name: "Detroit Tigers", years: "2000–present" },
+    ],
+    firstGame: {
+      date: "April 11, 2000",
+      homeTeam: "Detroit Tigers",
+      awayTeam: "Seattle Mariners",
+      score: "5–2",
+    },
   },
   {
     id: "kauffman-stadium",
@@ -425,6 +556,11 @@ export const stadiums: Stadium[] = [
       { name: "Gates Bar-B-Q", type: "BBQ", distance: "3 mi", note: "Order at the counter: 'Hi may I help you?' is a KC tradition." },
     ],
     imageColor: "bg-blue-600",
+
+    constructionCost: "$70M (1973)",
+    tenants: [
+      { name: "Kansas City Royals", years: "1973–present" },
+    ],
   },
   {
     id: "target-field",
@@ -464,6 +600,20 @@ export const stadiums: Stadium[] = [
       { name: "Bachelor Farmer", type: "Scandinavian-American", distance: "0.4 mi", note: "Excellent farm-to-table restaurant in the North Loop." },
     ],
     imageColor: "bg-red-600",
+
+    constructionCost: "$555M (2010)",
+    tenants: [
+      { name: "Minnesota Twins", years: "2010–present" },
+    ],
+    firstGame: {
+      date: "April 12, 2010",
+      homeTeam: "Minnesota Twins",
+      awayTeam: "Boston Red Sox",
+      score: "5–2",
+      winningPitcher: "Carl Pavano",
+    },
+    firstHit: { player: "Marco Scutaro", team: "Boston Red Sox" },
+    firstHomeRun: { player: "Jason Kubel", team: "Minnesota Twins" },
   },
   {
     id: "minute-maid-park",
@@ -503,6 +653,11 @@ export const stadiums: Stadium[] = [
       { name: "Niko Niko's", type: "Greek", distance: "3 mi", note: "Legendary Greek diner — best gyro in Houston." },
     ],
     imageColor: "bg-orange-600",
+
+    constructionCost: "$250M (2000)",
+    tenants: [
+      { name: "Houston Astros", years: "2000–present" },
+    ],
   },
   {
     id: "angel-stadium",
@@ -542,6 +697,12 @@ export const stadiums: Stadium[] = [
       { name: "Katella Deli", type: "Deli", distance: "0.3 mi", note: "Classic pre-game deli right next to the stadium." },
     ],
     imageColor: "bg-red-600",
+
+    constructionCost: "$24M (1966)",
+    tenants: [
+      { name: "Los Angeles Angels", years: "1966–present" },
+      { name: "Orange County Ramblers", sport: "Continental Football League", years: "1967–1968" },
+    ],
   },
   {
     id: "t-mobile-park",
@@ -581,6 +742,11 @@ export const stadiums: Stadium[] = [
       { name: "Taylor Shellfish Farms", type: "Oyster Bar", distance: "2 mi", note: "The freshest Pacific oysters from a local shellfish legend." },
     ],
     imageColor: "bg-teal-600",
+
+    constructionCost: "$517M (1999)",
+    tenants: [
+      { name: "Seattle Mariners", years: "1999–present" },
+    ],
   },
   {
     id: "globe-life-field",
@@ -620,6 +786,19 @@ export const stadiums: Stadium[] = [
       { name: "Pepe's & Mito's", type: "Mexican", distance: "4 mi", note: "Great authentic Mexican close to the stadium." },
     ],
     imageColor: "bg-blue-600",
+
+    elevationFt: 278,
+    constructionCost: "$1.1B (2020)",
+    tenants: [
+      { name: "Texas Rangers", years: "2020–present" },
+    ],
+    firstGame: {
+      date: "July 24, 2020",
+      homeTeam: "Texas Rangers",
+      awayTeam: "Colorado Rockies",
+      score: "1–0",
+    },
+    firstHomeRun: { player: "Joey Gallo", team: "Texas Rangers" },
   },
   {
     id: "truist-park",
@@ -659,6 +838,16 @@ export const stadiums: Stadium[] = [
       { name: "Varuni Napoli", type: "Pizza", distance: "7 mi (Atlanta)", note: "Excellent Neapolitan pizza, worth the drive." },
     ],
     imageColor: "bg-blue-700",
+
+    constructionCost: "$622M (2017)",
+    tenants: [
+      { name: "Atlanta Braves", years: "2017–present" },
+    ],
+    firstGame: {
+      date: "April 14, 2017",
+      homeTeam: "Atlanta Braves",
+      awayTeam: "San Diego Padres",
+    },
   },
   {
     id: "marlins-park",
@@ -698,6 +887,18 @@ export const stadiums: Stadium[] = [
       { name: "Zak the Baker", type: "Bakery / Deli", distance: "4 mi (Wynwood)", note: "Outstanding artisan bakery and deli." },
     ],
     imageColor: "bg-blue-500",
+
+    constructionCost: "$634M (2012)",
+    tenants: [
+      { name: "Miami Marlins", years: "2012–present" },
+      { name: "Miami Beach Bowl", sport: "NCAA Football", years: "2014–2016" },
+    ],
+    firstGame: {
+      date: "April 4, 2012",
+      homeTeam: "Miami Marlins",
+      awayTeam: "St. Louis Cardinals",
+      score: "4–1",
+    },
   },
   {
     id: "citizens-bank-park",
@@ -737,6 +938,17 @@ export const stadiums: Stadium[] = [
       { name: "Federal Donuts", type: "Donuts / Fried Chicken", distance: "3 mi", note: "Michael Solomonov's beloved donut and chicken shop." },
     ],
     imageColor: "bg-red-700",
+
+    constructionCost: "$458M (2004)",
+    tenants: [
+      { name: "Philadelphia Phillies", years: "2004–present" },
+    ],
+    firstGame: {
+      date: "April 12, 2004",
+      homeTeam: "Philadelphia Phillies",
+      awayTeam: "Cincinnati Reds",
+    },
+    firstHit: { player: "D'Angelo Jiménez", team: "Cincinnati Reds" },
   },
   {
     id: "nationals-park",
@@ -776,6 +988,16 @@ export const stadiums: Stadium[] = [
       { name: "Ben's Chili Bowl", type: "American", distance: "2.5 mi (U St)", note: "DC institution since 1958 — the half-smoke is essential." },
     ],
     imageColor: "bg-red-700",
+
+    constructionCost: "$693M (2008)",
+    tenants: [
+      { name: "Washington Nationals", years: "2008–present" },
+    ],
+    firstGame: {
+      date: "March 30, 2008",
+      homeTeam: "Washington Nationals",
+      awayTeam: "Atlanta Braves",
+    },
   },
   {
     id: "wrigley-field",
@@ -815,6 +1037,12 @@ export const stadiums: Stadium[] = [
       { name: "Gino's East", type: "Deep Dish Pizza", distance: "4 mi", note: "Chicago deep dish that takes 45 minutes but is worth it." },
     ],
     imageColor: "bg-blue-700",
+
+    tenants: [
+      { name: "Chicago Whales", sport: "Federal League", years: "1914–1915" },
+      { name: "Chicago Cubs", years: "1916–present" },
+      { name: "Chicago Bears", sport: "NFL", years: "1921–1970" },
+    ],
   },
   {
     id: "great-american-ball-park",
@@ -854,6 +1082,12 @@ export const stadiums: Stadium[] = [
       { name: "Boca", type: "European", distance: "1.5 mi", note: "Upscale special-occasion restaurant in OTR." },
     ],
     imageColor: "bg-red-700",
+
+    constructionCost: "$290M (2003)",
+    tenants: [
+      { name: "Cincinnati Reds", years: "2003–present" },
+    ],
+    longestHomeRun: { player: "Adam Dunn", team: "Cincinnati Reds", detail: "535 ft vs. Los Angeles Dodgers" },
   },
   {
     id: "american-family-field",
@@ -893,6 +1127,11 @@ export const stadiums: Stadium[] = [
       { name: "Lakefront Brewery", type: "Brewery", distance: "5 mi", note: "One of Milwaukee's great craft breweries." },
     ],
     imageColor: "bg-yellow-600",
+
+    constructionCost: "$400M (2001)",
+    tenants: [
+      { name: "Milwaukee Brewers", years: "2001–present" },
+    ],
   },
   {
     id: "pnc-park",
@@ -932,6 +1171,16 @@ export const stadiums: Stadium[] = [
       { name: "Gaucho Parrilla Argentina", type: "Argentine BBQ", distance: "0.3 mi", note: "Outstanding wood-fired meats right next to the park." },
     ],
     imageColor: "bg-yellow-500",
+
+    constructionCost: "$216M (2001)",
+    tenants: [
+      { name: "Pittsburgh Pirates", years: "2001–present" },
+    ],
+    firstGame: {
+      date: "April 9, 2001",
+      homeTeam: "Pittsburgh Pirates",
+      awayTeam: "Cincinnati Reds",
+    },
   },
   {
     id: "busch-stadium",
@@ -971,6 +1220,17 @@ export const stadiums: Stadium[] = [
       { name: "Budweiser Brew House", type: "Brewery / Bar", distance: "0.1 mi", note: "Anheuser-Busch brewery bar right next to the stadium." },
     ],
     imageColor: "bg-red-700",
+
+    constructionCost: "$365M (2006)",
+    tenants: [
+      { name: "St. Louis Cardinals", years: "2006–present" },
+    ],
+    firstGame: {
+      date: "April 10, 2006",
+      homeTeam: "St. Louis Cardinals",
+      awayTeam: "Milwaukee Brewers",
+      score: "6–4",
+    },
   },
   {
     id: "chase-field",
@@ -1010,6 +1270,10 @@ export const stadiums: Stadium[] = [
       { name: "Durant's Restaurant", type: "Steakhouse", distance: "1.5 mi", note: "Phoenix institution since 1950 — enter through the kitchen." },
     ],
     imageColor: "bg-purple-700",
+
+    tenants: [
+      { name: "Arizona Diamondbacks", years: "1998–present" },
+    ],
   },
   {
     id: "coors-field",
@@ -1049,6 +1313,19 @@ export const stadiums: Stadium[] = [
       { name: "Denver Milk Market", type: "Food Hall", distance: "0.7 mi", note: "18 local vendors in a beautiful historic creamery building." },
     ],
     imageColor: "bg-purple-700",
+
+    constructionCost: "$300M (1995)",
+    tenants: [
+      { name: "Colorado Rockies", years: "1995–present" },
+    ],
+    firstGame: {
+      date: "April 26, 1995",
+      homeTeam: "Colorado Rockies",
+      awayTeam: "New York Mets",
+      score: "11–9",
+    },
+    firstHit: { player: "Brett Butler", team: "New York Mets" },
+    firstHomeRun: { player: "Rico Brogna", team: "New York Mets" },
   },
   {
     id: "dodger-stadium",
@@ -1088,6 +1365,12 @@ export const stadiums: Stadium[] = [
       { name: "Clifton's Republic", type: "American", distance: "2 mi", note: "Historic downtown LA destination with multiple floors and bars." },
     ],
     imageColor: "bg-blue-700",
+
+    constructionCost: "$23M (1962)",
+    tenants: [
+      { name: "Los Angeles Dodgers", years: "1962–present" },
+      { name: "Los Angeles Angels", years: "1962–1965" },
+    ],
   },
   {
     id: "petco-park",
@@ -1127,6 +1410,17 @@ export const stadiums: Stadium[] = [
       { name: "Hodad's", type: "Burgers", distance: "5 mi", note: "San Diego's most beloved burger joint in Ocean Beach." },
     ],
     imageColor: "bg-orange-600",
+
+    constructionCost: "$450M (2004)",
+    tenants: [
+      { name: "San Diego Padres", years: "2004–present" },
+    ],
+    firstGame: {
+      date: "April 8, 2004",
+      homeTeam: "San Diego Padres",
+      awayTeam: "San Francisco Giants",
+      score: "4–3",
+    },
   },
   {
     id: "oracle-park",
@@ -1166,6 +1460,19 @@ export const stadiums: Stadium[] = [
       { name: "Mission Dolores Taquerias", type: "Burritos / Mexican", distance: "2 mi", note: "The Mission District has the best burritos in the world." },
     ],
     imageColor: "bg-orange-500",
+
+    constructionCost: "$357M (2000)",
+    tenants: [
+      { name: "San Francisco Giants", years: "2000–present" },
+      { name: "San Francisco Demons", sport: "XFL", years: "2001" },
+      { name: "Redbox Bowl (NCAA)", sport: "NCAA Football", years: "2002–2013" },
+    ],
+    firstGame: {
+      date: "April 11, 2000",
+      homeTeam: "San Francisco Giants",
+      awayTeam: "Los Angeles Dodgers",
+      score: "6–5",
+    },
   },
   {
     id: "sutter-health-park",
@@ -1205,6 +1512,13 @@ export const stadiums: Stadium[] = [
       { name: "Old Sacramento Waterfront", type: "Food & Entertainment District", distance: "0.6 mi", note: "Historic waterfront district with restaurants, bars, and shops." },
     ],
     imageColor: "bg-green-600",
+
+    elevationFt: 20,
+    constructionCost: "$46.5M (2000)",
+    tenants: [
+      { name: "Sacramento River Cats", sport: "PCL / Triple-A West", years: "2000–present" },
+      { name: "Oakland Athletics", years: "2025–present" },
+    ],
   },
 ];
 
