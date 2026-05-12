@@ -1167,6 +1167,45 @@ export const stadiums: Stadium[] = [
     ],
     imageColor: "bg-orange-500",
   },
+  {
+    id: "sutter-health-park",
+    slug: "sutter-health-park",
+    name: "Sutter Health Park",
+    team: "Oakland Athletics",
+    league: "AL",
+    division: "AL West",
+    city: "Sacramento",
+    state: "CA",
+    country: "USA",
+    capacity: 14014,
+    yearOpened: 2000,
+    surface: "Natural Grass",
+    roofType: "Open",
+    coordinates: { lat: 38.5801, lng: -121.5003 },
+    description: "Home of the Sacramento River Cats (AAA), Sutter Health Park became the temporary home of the Oakland Athletics in 2025 while the team's permanent Las Vegas ballpark is under construction. With a capacity of just 14,014, it is the smallest primary venue used by an MLB team in the modern era.",
+    funFacts: [
+      "At 14,014 seats, it is the smallest stadium serving as a primary MLB venue since Griffith Stadium in the 1950s.",
+      "The A's moved here after leaving the Oakland Coliseum at the end of the 2024 season — the first MLB team based in Sacramento.",
+      "The park sits along the Sacramento River, with views of downtown Sacramento beyond the outfield.",
+    ],
+    gettingThere: {
+      transit: "Sacramento Regional Transit light rail (Blue or Gold Line) to the Riverfront station, a short walk to the park.",
+      parking: "Surface lots and garages available nearby along Railyards Blvd. Arrive early as capacity is limited.",
+      rideshare: "Drop-off on Railyards Blvd. Rideshare recommended given limited parking.",
+    },
+    stayNearby: {
+      budget: { name: "HI Sacramento Hostel", distance: "0.8 mi" },
+      midRange: { name: "Hyatt Centric Sacramento", distance: "0.5 mi" },
+      luxury: { name: "Kimpton Sawyer Hotel", distance: "0.4 mi" },
+    },
+    nearbyFood: [
+      { name: "Iron Horse Tavern", type: "American / Bar", distance: "0.3 mi", note: "Classic tavern steps from the ballpark, great for pregame." },
+      { name: "Tank House BBQ & Bar", type: "BBQ", distance: "0.5 mi", note: "Award-winning Sacramento BBQ in the Railyards area." },
+      { name: "Broderick Roadhouse", type: "Burgers", distance: "0.4 mi", note: "Craft burgers and local beer near the riverfront." },
+      { name: "Old Sacramento Waterfront", type: "Food & Entertainment District", distance: "0.6 mi", note: "Historic waterfront district with restaurants, bars, and shops." },
+    ],
+    imageColor: "bg-green-600",
+  },
 ];
 
 // ── Former stadiums ──────────────────────────────────────────────────────────

@@ -53,6 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/browse" className="hover:text-gray-900 transition-colors">
                 Browse
               </Link>
+              <Link href="/aaa" className="hover:text-gray-900 transition-colors">
+                AAA
+              </Link>
               <Link href="/" className="hover:text-gray-900 transition-colors">
                 Map
               </Link>

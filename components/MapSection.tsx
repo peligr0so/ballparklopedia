@@ -19,23 +19,29 @@ type MapStadium = {
   coordinates: { lat: number; lng: number };
   division: string;
   status?: "active" | "former";
+  type?: "mlb" | "aaa";
 };
 
 interface Props {
   currentStadiums: MapStadium[];
   formerStadiums: MapStadium[];
+  aaaStadiums?: MapStadium[];
 }
 
-type Layer = "current" | "former";
+type Layer = "current" | "former" | "aaa";
 
-export default function MapSection({ currentStadiums, formerStadiums }: Props) {
+export default function MapSection({
+  currentStadiums,
+  formerStadiums,
+  aaaStadiums = [],
+}: Props) {
   const [activeLayers, setActiveLayers] = useState<Set<Layer>>(new Set(["current"]));
 
   function toggleLayer(layer: Layer) {
     setActiveLayers((prev) => {
       const next = new Set(prev);
       if (next.has(layer)) {
-        // Don't allow deselecting both
+        // Keep at least one layer active
         if (next.size > 1) next.delete(layer);
       } else {
         next.add(layer);
@@ -47,16 +53,18 @@ export default function MapSection({ currentStadiums, formerStadiums }: Props) {
   const visibleStadiums = [
     ...(activeLayers.has("current") ? currentStadiums : []),
     ...(activeLayers.has("former") ? formerStadiums : []),
+    ...(activeLayers.has("aaa") ? aaaStadiums : []),
   ];
 
-  const showingFormer = activeLayers.has("former");
   const showingCurrent = activeLayers.has("current");
+  const showingFormer = activeLayers.has("former");
+  const showingAAA = activeLayers.has("aaa");
 
   return (
     <div>
       {/* Layer toggles */}
       <div className="flex items-center justify-between mb-3 gap-4 flex-wrap">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <LayerToggle
             label="Current MLB"
             active={showingCurrent}
@@ -71,11 +79,19 @@ export default function MapSection({ currentStadiums, formerStadiums }: Props) {
             dotColor="#9ca3af"
             onClick={() => toggleLayer("former")}
           />
-          {/* Future leagues will go here */}
+          {aaaStadiums.length > 0 && (
+            <LayerToggle
+              label="AAA"
+              active={showingAAA}
+              count={aaaStadiums.length}
+              dotColor="#16a34a"
+              onClick={() => toggleLayer("aaa")}
+            />
+          )}
         </div>
 
-        {/* Division legend — only show when current is active */}
-        {showingCurrent && (
+        {/* Division legend — only show when MLB current is active */}
+        {showingCurrent && !showingAAA && (
           <div className="flex flex-wrap gap-x-3 gap-y-1">
             {Object.entries(DIVISION_COLORS).map(([div, color]) => (
               <span key={div} className="flex items-center gap-1 text-xs text-gray-500">
@@ -86,6 +102,20 @@ export default function MapSection({ currentStadiums, formerStadiums }: Props) {
                 {div}
               </span>
             ))}
+          </div>
+        )}
+
+        {/* AAA legend */}
+        {showingAAA && (
+          <div className="flex flex-wrap gap-x-3 gap-y-1">
+            <span className="flex items-center gap-1 text-xs text-gray-500">
+              <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#16a34a" }} />
+              International League
+            </span>
+            <span className="flex items-center gap-1 text-xs text-gray-500">
+              <span className="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#0891b2" }} />
+              Pacific Coast League
+            </span>
           </div>
         )}
       </div>

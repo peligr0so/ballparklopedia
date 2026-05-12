@@ -1,5 +1,6 @@
 import MapSection from "@/components/MapSection";
 import { stadiums, formerStadiums } from "@/lib/stadiums";
+import { aaaStadiums } from "@/lib/aaaStadiums";
 
 export default function HomePage() {
   const totalCapacity = stadiums.reduce((sum, s) => sum + s.capacity, 0);
@@ -22,6 +23,15 @@ export default function HomePage() {
     coordinates: s.coordinates,
     division: s.division,
     status: "former" as const,
+  }));
+
+  const aaaMapData = aaaStadiums.map((s) => ({
+    slug: s.slug,
+    name: s.name,
+    team: s.team,
+    coordinates: s.coordinates,
+    division: s.minorLeague, // "IL" or "PCL" — used for color in StadiumMap
+    type: "aaa" as const,
   }));
 
   return (
@@ -52,7 +62,11 @@ export default function HomePage() {
       </div>
 
       {/* Interactive map with layer toggle */}
-      <MapSection currentStadiums={currentMapData} formerStadiums={formerMapData} />
+      <MapSection
+        currentStadiums={currentMapData}
+        formerStadiums={formerMapData}
+        aaaStadiums={aaaMapData}
+      />
     </div>
   );
 }
